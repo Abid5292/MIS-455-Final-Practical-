@@ -2,23 +2,23 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: #72bc87;
     color: #333;
   }
   
   header {
-    background-color: #333;
-    color: #fff;
+    background-color: #1b4449;
+    color: #fbfefb;
     text-align: center;
     padding: 15px 0;
   }
   
   footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #fe7171;
+    color: #111010;
     text-align: center;
-    padding: 10px 0;
-    position: fixed;
+    padding: 1px ;
+    position: center;
     bottom: 0;
     width: 100%;
   }
