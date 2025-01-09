@@ -12,40 +12,41 @@ async function fetchMeals() {
   }
 
   const apiUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
-  
+
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
-    
+
     if (!data.meals) {
-      mealResults.innerHTML = "<p>No meals found. Try another search.</p>";
+      mealResults.innerHTML = "<p class='text-center'>No meals found. Try another search.</p>";
       return;
     }
 
     renderMeals(data.meals);
   } catch (error) {
     console.error("Error fetching data:", error);
-    mealResults.innerHTML = "<p>There was an error fetching meals. Try again later.</p>";
+    mealResults.innerHTML = "<p class='text-center'>There was an error fetching meals. Try again later.</p>";
   }
 }
 
 function renderMeals(meals) {
-  mealResults.innerHTML = ""; 
+  mealResults.innerHTML = ""; // Clear previous results
 
   const maxDisplay = 5;
   const initialMeals = meals.slice(0, maxDisplay);
 
-  initialMeals.forEach(meal => {
+  
+  initialMeals.forEach((meal) => {
     mealResults.appendChild(createMealCard(meal));
   });
 
   if (meals.length > maxDisplay) {
     const showAllBtn = document.createElement("div");
     showAllBtn.classList.add("show-all-btn");
-    showAllBtn.innerHTML = '<button>SHOW ALL</button>';
+    showAllBtn.innerHTML = '<button class="btn btn-success">SHOW ALL</button>';
     showAllBtn.addEventListener("click", () => {
       const remainingMeals = meals.slice(maxDisplay);
-      remainingMeals.forEach(meal => {
+      remainingMeals.forEach((meal) => {
         mealResults.appendChild(createMealCard(meal));
       });
       showAllBtn.remove();
@@ -55,15 +56,19 @@ function renderMeals(meals) {
 }
 
 function createMealCard(meal) {
-  const mealCard = document.createElement("div");
-  mealCard.classList.add("meal");
+  const mealCol = document.createElement("div");
+  mealCol.classList.add("col-md-4");
 
-  mealCard.innerHTML = `
-    <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
-    <h2>${meal.strMeal}</h2>
-    <p><strong>ID:</strong> ${meal.idMeal}</p>
-    <p>${meal.strInstructions.substring(0, 100)}...</p>
+  mealCol.innerHTML = `
+    <div class="card meal-card">
+      <img src="${meal.strMealThumb}" class="card-img-top" alt="${meal.strMeal}">
+      <div class="card-body">
+        <h5 class="card-title">${meal.strMeal}</h5>
+        <p class="card-text"><strong>ID:</strong> ${meal.idMeal}</p>
+        <p class="card-text">${meal.strInstructions.substring(0, 100)}...</p>
+      </div>
+    </div>
   `;
 
-  return mealCard;
+  return mealCol;
 }
